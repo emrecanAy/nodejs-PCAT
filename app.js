@@ -15,9 +15,13 @@ const { RSA_NO_PADDING } = require('constants');
 const app = express();
 
 //connect DB
-mongoose.connect('mongodb://localhost/pcat-test-db', {
+mongoose.connect('mongodb+srv://emrecan:Asd123Asd123@cluster0.ucwkq.mongodb.net/pcat-db?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+}).then(() => {
+  console.log('DB CONNECTED!');
+}).catch((err) => {
+  console.log(err)
 });
 
 //TEMPLATE ENGINE
@@ -45,7 +49,7 @@ app.get('/about', pageController.getAboutPage);
 app.get('/add', pageController.getAddPage);
 app.get('/photos/edit/:id', pageController.getEditPage);
 
-const port = 3000;
+const port = process.env.port || 5000;
 app.listen(port, () => {
   console.log(`Sunucu port:${port}'de başlatıldı...`);
 });
